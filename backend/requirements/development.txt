@@ -1,0 +1,2 @@
+-r base.txt
+faker>=24.0
