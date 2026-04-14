@@ -2,14 +2,13 @@ version: '3.9'
 
 services:
   db:
-    build:
-      context: ./docker
-      dockerfile: postgres.Dockerfile
+    image: postgres:16-alpine
     container_name: pmtool_postgres
     restart: unless-stopped
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     environment:
+      TZ: UTC
       POSTGRES_DB: ${POSTGRES_DB:-project_management}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
