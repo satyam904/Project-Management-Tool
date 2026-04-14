@@ -21,42 +21,5 @@ services:
       timeout: 5s
       retries: 5
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: pmtool_backend
-    restart: unless-stopped
-    ports:
-      - "8000:8000"
-    environment:
-      - DB_HOST=db
-      - DB_PORT=${POSTGRES_PORT:-5432}
-      - DB_NAME=${POSTGRES_DB:-project_management}
-      - DB_USER=${POSTGRES_USER:-postgres}
-      - DB_PASSWORD=${POSTGRES_PASSWORD:-postgres}
-      - SECRET_KEY=${SECRET_KEY:-django-insecure-development-key}
-      - DEBUG=True
-      - ALLOWED_HOSTS=*
-    depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - backend_static:/app/static
-      - backend_media:/app/media
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: pmtool_frontend
-    restart: unless-stopped
-    ports:
-      - "3000:80"  # Mapping localhost:3000 to nginx container port 80
-    depends_on:
-      - backend
-
 volumes:
   postgres_data:
-  backend_static:
-  backend_media:
